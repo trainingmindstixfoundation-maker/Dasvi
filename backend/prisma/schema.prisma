@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Class {
+  id          Int      @id @default(autoincrement())
+  name        String   // e.g., "9th", "10th"
+  description String?
+  mediums     Medium[]
+  subjects    Subject[]
+  videos      Video[]
+  createdAt   DateTime @default(now())
+}
+
+model Medium {
+  id        Int       @id @default(autoincrement())
+  name      String    // e.g., "English", "Hindi", "Marathi"
+  classId   Int
+  class     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+  subjects  Subject[]
+  videos    Video[]
+  createdAt DateTime  @default(now())
+}
+
+model Subject {
+  id        Int      @id @default(autoincrement())
+  name      String   // e.g., "Maths", "Science"
+  classId   Int
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  mediumId  Int
+  medium    Medium   @relation(fields: [mediumId], references: [id], onDelete: Cascade)
+  videos    Video[]
+  createdAt DateTime @default(now())
+}
+
+model Video {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  url         String
+  thumbnail   String?
+  tags        String?
+  classId     Int
+  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  mediumId    Int
+  medium      Medium   @relation(fields: [mediumId], references: [id], onDelete: Cascade)
+  subjectId   Int
+  subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
