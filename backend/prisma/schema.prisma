@@ -1,6 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// This is your Prisma schema file
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,55 +9,171 @@ datasource db {
 }
 
 model Admin {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique @db.VarChar(255)
   password  String
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("admins")
 }
 
 model Class {
-  id          Int      @id @default(autoincrement())
-  name        String   // e.g., "9th", "10th"
-  description String?
-  mediums     Medium[]
-  subjects    Subject[]
-  videos      Video[]
-  createdAt   DateTime @default(now())
+  id             String    @id @default(uuid()) @db.Uuid
+  name_en        String    @db.VarChar(255)
+  name_mr        String    @db.VarChar(255)
+  name_hi        String    @db.VarChar(255)
+  description_en String?
+  description_mr String?
+  description_hi String?
+  imageUrl       String?   @map("image_url")
+  imageUrl_en    String?   @map("image_url_en")
+  imageUrl_mr    String?   @map("image_url_mr")
+  imageUrl_hi    String?   @map("image_url_hi")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  mediums        Medium[]
+  subjects       Subject[]
+  tests          Test[]
+
+  @@map("classes")
 }
 
 model Medium {
-  id        Int       @id @default(autoincrement())
-  name      String    // e.g., "English", "Hindi", "Marathi"
-  classId   Int
+  id        String    @id @default(uuid()) @db.Uuid
+  classId   String    @map("class_id") @db.Uuid
+  name_en   String    @db.VarChar(100)
+  name_mr   String    @db.VarChar(100)
+  name_hi   String    @db.VarChar(100)
+  createdAt DateTime  @default(now()) @map("created_at")
   class     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
   subjects  Subject[]
-  videos    Video[]
-  createdAt DateTime  @default(now())
+  tests     Test[]
+
+  @@map("mediums")
 }
 
 model Subject {
-  id        Int      @id @default(autoincrement())
-  name      String   // e.g., "Maths", "Science"
-  classId   Int
+  id        String   @id @default(uuid()) @db.Uuid
+  classId   String   @map("class_id") @db.Uuid
+  mediumId  String   @map("medium_id") @db.Uuid
+  name_en   String   @db.VarChar(255)
+  name_mr   String   @db.VarChar(255)
+  name_hi   String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
   class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
-  mediumId  Int
   medium    Medium   @relation(fields: [mediumId], references: [id], onDelete: Cascade)
   videos    Video[]
-  createdAt DateTime @default(now())
+  tests     Test[]
+
+  @@map("subjects")
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  url         String
-  thumbnail   String?
-  tags        String?
-  classId     Int
-  class       Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
-  mediumId    Int
-  medium      Medium   @relation(fields: [mediumId], references: [id], onDelete: Cascade)
-  subjectId   Int
-  subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
+  id             String   @id @default(uuid()) @db.Uuid
+  subjectId      String   @map("subject_id") @db.Uuid
+  videoUrl       String   @map("video_url")
+  thumbnail      String?
+  duration       Int?
+  title_en       String   @db.VarChar(255)
+  title_mr       String   @db.VarChar(255)
+  title_hi       String   @db.VarChar(255)
+  description_en String?
+  description_mr String?
+  description_hi String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  subject        Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  tests          Test[]
+
+  @@map("videos")
+}
+
+model Test {
+  id                 String     @id @default(uuid()) @db.Uuid
+  classId            String?    @map("class_id") @db.Uuid
+  mediumId           String?    @map("medium_id") @db.Uuid
+  subjectId          String?    @map("subject_id") @db.Uuid
+  videoId            String?    @map("video_id") @db.Uuid
+  title_en           String     @db.VarChar(255)
+  title_mr           String     @db.VarChar(255)
+  title_hi           String     @db.VarChar(255)
+  pdf_url_en         String?    @map("pdf_url_en")
+  pdf_url_mr         String?    @map("pdf_url_mr")
+  pdf_url_hi         String?    @map("pdf_url_hi")
+  google_form_url_en String?    @map("google_form_url_en")
+  google_form_url_mr String?    @map("google_form_url_mr")
+  google_form_url_hi String?    @map("google_form_url_hi")
+  createdAt          DateTime   @default(now()) @map("created_at")
+  class              Class?     @relation(fields: [classId], references: [id], onDelete: SetNull)
+  medium             Medium?    @relation(fields: [mediumId], references: [id], onDelete: SetNull)
+  subject            Subject?   @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  video              Video?     @relation(fields: [videoId], references: [id], onDelete: SetNull)
+  questions          Question[]
+
+  @@map("tests")
+}
+
+model Question {
+  id               String   @id @default(uuid()) @db.Uuid
+  testId           String   @map("test_id") @db.Uuid
+  question_text_en String   @map("question_text_en")
+  question_text_mr String   @map("question_text_mr")
+  question_text_hi String   @map("question_text_hi")
+  createdAt        DateTime @default(now()) @map("created_at")
+  test             Test     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  options          Option[]
+
+  @@map("questions")
+}
+
+model Option {
+  id             String   @id @default(uuid()) @db.Uuid
+  questionId     String   @map("question_id") @db.Uuid
+  isCorrect      Boolean  @default(false) @map("is_correct")
+  option_text_en String   @map("option_text_en")
+  option_text_mr String   @map("option_text_mr")
+  option_text_hi String   @map("option_text_hi")
+  question       Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("options")
+}
+
+model Feedback {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String?  @db.VarChar(255)
+  name      String?  @db.VarChar(255)
+  email     String?  @db.VarChar(255)
+  rating    String?  @db.VarChar(50)
+  formUrl   String?  @map("form_url")
+  message   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("feedbacks")
+}
+
+model Visitor {
+  id           String            @id @default(uuid()) @db.Uuid
+  fullName     String            @map("full_name") @db.VarChar(200)
+  email        String            @db.VarChar(255)
+  phone        String            @db.VarChar(15)
+  itiInstitute String            @map("iti_institute") @db.VarChar(255)
+  createdAt    DateTime          @default(now()) @map("created_at")
+  lastVisit    DateTime          @default(now()) @map("last_visit")
+  totalVisits  Int               @default(1) @map("total_visits")
+  ipAddress    String?           @map("ip_address") @db.VarChar(50)
+  userAgent    String?           @map("user_agent")
+  visitorToken String            @unique @map("visitor_token") @db.VarChar(255)
+  activities   VisitorActivity[]
+
+  @@map("visitors")
+}
+
+model VisitorActivity {
+  id           Int      @id @default(autoincrement())
+  visitorId    String   @map("visitor_id") @db.Uuid
+  activityType String   @map("activity_type") @db.VarChar(50)
+  resourceId   String?  @map("resource_id") @db.VarChar(100)
+  duration     Int?     @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  visitor      Visitor  @relation(fields: [visitorId], references: [id], onDelete: Cascade)
+
+  @@map("visitor_activity")
 }

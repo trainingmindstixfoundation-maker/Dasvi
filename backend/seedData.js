@@ -59,20 +59,31 @@ async function main() {
       });
     }
 
-    // Create Video
-    await prisma.video.create({
-      data: {
+    // Create Video if not exists
+    let existingVideo = await prisma.video.findFirst({
+      where: {
         title: videoTitle,
-        description: videoDescription,
-        url: url,
-        thumbnail: `https://img.youtube.com/vi/${videoLink.replace('v=', '')}/hqdefault.jpg`,
         classId: classRecord.id,
         mediumId: mediumRecord.id,
-        subjectId: subjectRecord.id,
+        subjectId: subjectRecord.id
       }
     });
-
-    console.log(`Added: ${videoTitle}`);
+    if (!existingVideo) {
+      await prisma.video.create({
+        data: {
+          title: videoTitle,
+          description: videoDescription,
+          url: url,
+          thumbnail: `https://img.youtube.com/vi/${videoLink.replace('v=', '')}/hqdefault.jpg`,
+          classId: classRecord.id,
+          mediumId: mediumRecord.id,
+          subjectId: subjectRecord.id,
+        }
+      });
+      console.log(`Added: ${videoTitle}`);
+    } else {
+      console.log(`Skipped (already exists): ${videoTitle}`);
+    }
   }
 }
 
