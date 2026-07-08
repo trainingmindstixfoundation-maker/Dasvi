@@ -57,7 +57,7 @@ export default function SemesterCard({ tradeName, semesterName, videoCount, modu
           followingLabel={t('semesterCard.videoLessons')}
           followersIcon={Languages}
           followingIcon={PlayCircle}
-          buttonLabel={t('semesterCard.viewModules') || 'View Modules'}
+          buttonLabel="View Modules"
           onFollow={() => navigate(linkTo)}
           onClick={() => navigate(linkTo)}
         />

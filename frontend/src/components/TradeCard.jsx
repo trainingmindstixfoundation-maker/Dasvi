@@ -63,7 +63,7 @@ export default function TradeCard({ tradeName, videoCount, moduleCount, classDes
       followingLabel={t('tradeCard.lectures')}
       followersIcon={TRADE_ICONS[key] || BookOpen}
       followingIcon={PlayCircle}
-      buttonLabel={t('tradeCard.viewCourses') || 'View Courses'}
+      buttonLabel="View Courses"
       onFollow={() => navigate(`/trade/${encodeURIComponent(tradeName)}`)}
       onClick={() => navigate(`/trade/${encodeURIComponent(tradeName)}`)}
       className="w-full"

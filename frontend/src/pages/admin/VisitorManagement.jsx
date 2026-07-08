@@ -121,14 +121,6 @@ export default function VisitorManagement() {
         </div>
 
         <div className="d-flex align-items-center gap-2">
-          <button
-            onClick={fetchVisitors}
-            disabled={loading}
-            className="btn btn-sm px-3 py-2 rounded-pill d-flex align-items-center gap-2"
-            style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)' }}
-          >
-            
-          </button>
 
           <button
             onClick={handleExportCSV}
@@ -145,15 +137,15 @@ export default function VisitorManagement() {
       {/* Stats Cards Row */}
       <div className="row g-3 mb-4">
         <div className="col-12 col-md-4">
-          <div className="card border-0 rounded-4 p-4 shadow-sm" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle) !important' }}>
-            <div className="d-flex justify-content-between align-items-start">
-              <div>
+          <div className="card border-0 rounded-4 p-4 shadow-sm h-100" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle) !important' }}>
+            <div className="d-flex justify-content-between align-items-center h-100">
+              <div className="d-flex flex-column justify-content-center">
                 <span className="small font-semibold uppercase text-secondary d-block mb-1">Total Registered Students</span>
                 <h3 className="fw-extrabold m-0" style={{ color: 'var(--text-heading)', fontSize: '2rem' }}>
                   {visitors.length}
                 </h3>
               </div>
-              <div className="p-3 rounded-4" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+              <div className="p-3 rounded-4 flex-shrink-0" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
                 <Users size={24} />
               </div>
             </div>
@@ -161,15 +153,15 @@ export default function VisitorManagement() {
         </div>
 
         <div className="col-12 col-md-4">
-          <div className="card border-0 rounded-4 p-4 shadow-sm" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle) !important' }}>
-            <div className="d-flex justify-content-between align-items-start">
-              <div>
+          <div className="card border-0 rounded-4 p-4 shadow-sm h-100" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle) !important' }}>
+            <div className="d-flex justify-content-between align-items-center h-100">
+              <div className="d-flex flex-column justify-content-center">
                 <span className="small font-semibold uppercase text-secondary d-block mb-1">Total Learning Sessions</span>
                 <h3 className="fw-extrabold m-0" style={{ color: 'var(--text-heading)', fontSize: '2rem' }}>
                   {totalVisitsCount}
                 </h3>
               </div>
-              <div className="p-3 rounded-4" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+              <div className="p-3 rounded-4 flex-shrink-0" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
                 <Activity size={24} />
               </div>
             </div>
@@ -177,15 +169,15 @@ export default function VisitorManagement() {
         </div>
 
         <div className="col-12 col-md-4">
-          <div className="card border-0 rounded-4 p-4 shadow-sm" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle) !important' }}>
-            <div className="d-flex justify-content-between align-items-start">
-              <div>
+          <div className="card border-0 rounded-4 p-4 shadow-sm h-100" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-subtle) !important' }}>
+            <div className="d-flex justify-content-between align-items-center h-100">
+              <div className="d-flex flex-column justify-content-center">
                 <span className="small font-semibold uppercase text-secondary d-block mb-1">Active ITI Institutes</span>
                 <h3 className="fw-extrabold m-0" style={{ color: 'var(--text-heading)', fontSize: '2rem' }}>
                   {uniqueInstitutesCount}
                 </h3>
               </div>
-              <div className="p-3 rounded-4" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
+              <div className="p-3 rounded-4 flex-shrink-0" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }}>
                 <Building2 size={24} />
               </div>
             </div>
@@ -289,7 +281,6 @@ export default function VisitorManagement() {
                     {/* Institute */}
                     <td className="px-3 py-2.5">
                       <span className="badge rounded-pill px-3 py-2" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-heading)', border: '1px solid var(--border-subtle)', fontWeight: '500' }}>
-                        <Building2 size={13} className="me-1.5 text-warning" />
                         {visitor.itiInstitute}
                       </span>
                     </td>

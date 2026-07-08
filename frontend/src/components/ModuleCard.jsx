@@ -84,7 +84,7 @@ export default function ModuleCard({ tradeName, semesterName, moduleName, lesson
         followingLabel={t('tradeCard.lectures')}
         followersIcon={MODULE_ICONS[moduleKey] || BookOpen}
         followingIcon={PlayCircle}
-        buttonLabel={t('moduleCard.viewLessons') || 'View Lessons'}
+        buttonLabel="View Lessons"
         onClick={() => navigate(linkTo)}
         onFollow={() => navigate(linkTo)}
       />

@@ -135,7 +135,7 @@ export default function Home({ lessons, searchQuery = '', setSearchQuery }) {
       <div className="mb-5 text-start pt-4">
         <div className="p-5" style={{ backgroundColor: 'var(--bg-secondary)', borderRadius: '32px', border: '1px solid var(--border-subtle)' }}>
           <h2 className="text-heading fw-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
-            {t('home.whyDasvi') || 'Why Dasvi?'}
+            Why Dasvi?
           </h2>
           <div className="row g-4">
             <div className="col-md-6">
@@ -144,7 +144,7 @@ export default function Home({ lessons, searchQuery = '', setSearchQuery }) {
                   <i className="bi bi-heart-fill fs-5" style={{ color: 'var(--brand-primary)' }}></i>
                 </div>
                 <div>
-                  <h4 className="fw-bold mb-2" style={{ color: 'var(--text-heading)' }}>{t('home.visionImpactTitle') || 'Our Vision & Impact'}</h4>
+                  <h4 className="fw-bold mb-2" style={{ color: 'var(--text-heading)' }}>Our Vision & Impact</h4>
                   <p className="text-muted-custom" style={{ lineHeight: '1.6' }}>
                     {t('home.visionP1')}
                   </p>
@@ -157,7 +157,7 @@ export default function Home({ lessons, searchQuery = '', setSearchQuery }) {
                   <i className="bi bi-rocket-takeoff-fill fs-5" style={{ color: 'var(--brand-primary)' }}></i>
                 </div>
                 <div>
-                  <h4 className="fw-bold mb-2" style={{ color: 'var(--text-heading)' }}>{t('home.empowermentTitle') || 'Holistic Empowerment'}</h4>
+                  <h4 className="fw-bold mb-2" style={{ color: 'var(--text-heading)' }}>Holistic Empowerment</h4>
                   <p className="text-muted-custom" style={{ lineHeight: '1.6' }}>
                     {t('home.visionP2')}
                   </p>
